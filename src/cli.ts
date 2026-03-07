@@ -39,9 +39,7 @@ for (let i = 0; i < args.length; i++) {
   rest.push(arg);
 }
 
-async function resolveInput(
-  input: string,
-): Promise<{
+async function resolveInput(input: string): Promise<{
   markdown: string;
   outputPath: string;
   watchPath?: string;
