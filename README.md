@@ -43,12 +43,12 @@ npx mdshot gh:unjs/mdshot
 
 **Options:**
 
-| Flag | Description |
-| --- | --- |
-| `--watch`, `-w` | Watch for file changes and re-render |
-| `--select <pattern>`, `-s <pattern>` | Select sections by heading (regex) |
-| `--width <px>` | Image width in pixels (default: `1280`) |
-| `--height <px>` | Image height in pixels (default: `640`) |
+| Flag                                 | Description                             |
+| ------------------------------------ | --------------------------------------- |
+| `--watch`, `-w`                      | Watch for file changes and re-render    |
+| `--select <pattern>`, `-s <pattern>` | Select sections by heading (regex)      |
+| `--width <px>`                       | Image width in pixels (default: `1280`) |
+| `--height <px>`                      | Image height in pixels (default: `640`) |
 
 **Examples:**
 
@@ -81,15 +81,15 @@ const png = await mdshot(markdown, {
 
 **Options:**
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `width` | `number` | `1280` | Image width in pixels |
-| `height` | `number` | `640` | Image height in pixels |
-| `format` | `OutputFormat` | `"png"` | Output format |
-| `devicePixelRatio` | `number` | `2` | Device pixel ratio (retina) |
-| `theme` | `Partial<Theme>` | - | Custom theme overrides |
-| `fonts` | `Font[]` | - | Additional fonts to load |
-| `select` | `string` | - | Regex pattern to select sections by heading |
+| Option             | Type             | Default | Description                                 |
+| ------------------ | ---------------- | ------- | ------------------------------------------- |
+| `width`            | `number`         | `1280`  | Image width in pixels                       |
+| `height`           | `number`         | `640`   | Image height in pixels                      |
+| `format`           | `OutputFormat`   | `"png"` | Output format                               |
+| `devicePixelRatio` | `number`         | `2`     | Device pixel ratio (retina)                 |
+| `theme`            | `Partial<Theme>` | -       | Custom theme overrides                      |
+| `fonts`            | `Font[]`         | -       | Additional fonts to load                    |
+| `select`           | `string`         | -       | Regex pattern to select sections by heading |
 
 ## Development
 

@@ -39,7 +39,15 @@ for (let i = 0; i < args.length; i++) {
   rest.push(arg);
 }
 
-async function resolveInput(input: string): Promise<{ markdown: string; outputPath: string; watchPath?: string; defaultTitle?: string; defaultDescription?: string }> {
+async function resolveInput(
+  input: string,
+): Promise<{
+  markdown: string;
+  outputPath: string;
+  watchPath?: string;
+  defaultTitle?: string;
+  defaultDescription?: string;
+}> {
   if (input === "npm:" || input === "gh:") {
     throw new Error(`Invalid input: "${input}" — missing package or repo name`);
   }
@@ -55,7 +63,12 @@ async function resolveInput(input: string): Promise<{ markdown: string; outputPa
       throw new Error(`Package "${pkg}" has no README`);
     }
     const outputPath = resolve(`${pkg.replace(/[/@]/g, "_")}.png`);
-    return { markdown: data.readme, outputPath, defaultTitle: pkg, defaultDescription: data.description ?? undefined };
+    return {
+      markdown: data.readme,
+      outputPath,
+      defaultTitle: pkg,
+      defaultDescription: data.description ?? undefined,
+    };
   }
   const ghMatch = input.match(/^gh:([^/]+\/.+)$/);
   if (input.startsWith("gh:") && !ghMatch) {
@@ -73,9 +86,14 @@ async function resolveInput(input: string): Promise<{ markdown: string; outputPa
       throw new Error(`Failed to fetch README: ${readmeRes.status} ${readmeRes.statusText}`);
     }
     const markdown = await readmeRes.text();
-    const repoData = repoRes?.ok ? (await repoRes.json()) as { description?: string } : undefined;
+    const repoData = repoRes?.ok ? ((await repoRes.json()) as { description?: string }) : undefined;
     const outputPath = resolve(`${repo.replace(/[/@]/g, "_")}.png`);
-    return { markdown, outputPath, defaultTitle: repo, defaultDescription: repoData?.description ?? undefined };
+    return {
+      markdown,
+      outputPath,
+      defaultTitle: repo,
+      defaultDescription: repoData?.description ?? undefined,
+    };
   }
   const inputPath = resolve(input);
   const markdown = readFileSync(inputPath, "utf8");
@@ -86,7 +104,9 @@ async function resolveInput(input: string): Promise<{ markdown: string; outputPa
 const input = rest[0];
 
 if (!input) {
-  console.error("Usage: mdshot <input.md|npm:package|gh:owner/repo> [output.png] [--watch] [--select <pattern>] [--width <px>] [--height <px>] [--title <text>] [--description <text>]");
+  console.error(
+    "Usage: mdshot <input.md|npm:package|gh:owner/repo> [output.png] [--watch] [--select <pattern>] [--width <px>] [--height <px>] [--title <text>] [--description <text>]",
+  );
   process.exit(1);
 }
 
@@ -97,7 +117,13 @@ async function render() {
   const { markdown } = resolved.watchPath
     ? { markdown: readFileSync(resolved.watchPath, "utf8") }
     : resolved;
-  const buf = await mdshot(markdown, { select, width, height, title: title ?? resolved.defaultTitle, description: description ?? resolved.defaultDescription });
+  const buf = await mdshot(markdown, {
+    select,
+    width,
+    height,
+    title: title ?? resolved.defaultTitle,
+    description: description ?? resolved.defaultDescription,
+  });
   writeFileSync(outputPath, buf);
   console.log(`Screenshot saved to ${outputPath}`);
 }
